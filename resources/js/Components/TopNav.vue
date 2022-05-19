@@ -8,6 +8,13 @@ import { Link } from "@inertiajs/inertia-vue3";
             <Link href="/" class="font-bold text-4xl">Skool</Link>
             <div class="links flex space-x-2">
                 <Link
+                    :href="route('questions')"
+                    class="font-bold"
+                    :class="{ 'text-blue-400': $page.url === '/questions' }"
+                >
+                    Questions
+                </Link>
+                <Link
                     href="/dashboard"
                     class="font-bold"
                     :class="{ 'text-blue-400': $page.url === '/dashboard' }"

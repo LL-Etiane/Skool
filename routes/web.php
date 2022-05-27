@@ -1,8 +1,11 @@
 <?php
 
+use App\Http\Controllers\AdminSubjectController;
 use App\Http\Controllers\HomeController;
 use Illuminate\Foundation\Application;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Gate;
 use Inertia\Inertia;
 
 /*
@@ -19,8 +22,14 @@ use Inertia\Inertia;
 Route::get('/',[HomeController::class,'index'])->name('home');
 Route::get('/questions',[HomeController::class,'questions'])->name('questions');
 
-Route::get('/dashboard', function () {
-    return Inertia::render('Dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+//Admin routes
+Route::prefix('dashboard')->group(function(){
+    Route::get('/', function () {
+        return Inertia::render('Dashboard',[
+            'isAdmin' => Auth::user()->can('isAdmin')
+        ]);
+    })->middleware(['auth', 'verified'])->name('dashboard');
+    Route::resource('/subjects',AdminSubjectController::class);
+});
 
 require __DIR__.'/auth.php';

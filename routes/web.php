@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AdminSubjectController;
+use App\Http\Controllers\AuthGeneralController;
 use App\Http\Controllers\HomeController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Auth;
@@ -23,13 +24,11 @@ Route::get('/',[HomeController::class,'index'])->name('home');
 Route::get('/questions',[HomeController::class,'questions'])->name('questions');
 
 //Admin routes
-Route::prefix('dashboard')->group(function(){
-    Route::get('/', function () {
-        return Inertia::render('Dashboard',[
-            'isAdmin' => Auth::user()->can('isAdmin')
-        ]);
-    })->middleware(['auth', 'verified'])->name('dashboard');
+Route::prefix('dashboard')->middleware(['auth','verified'])->group(function(){
+    Route::get('/', [AuthGeneralController::class, 'index'])->name('dashboard');
     Route::resource('/subjects',AdminSubjectController::class);
+    //save a past question to system
+    Route::post('/pastQuestion',[AuthGeneralController::class, 'storeQuestion'])->name('pastQuestion.store');
 });
 
 require __DIR__.'/auth.php';

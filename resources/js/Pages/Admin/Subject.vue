@@ -41,11 +41,7 @@ const submit = () => {
                                 class="w-full md:w-2/5 border p-2 border-blue-400"
                             >
                                 <BreezeValidationErrors class="mb-4" />
-                                <form
-                                    @submit.prevent="submit"
-                                    :action="route('subjects.store')"
-                                    method="POST"
-                                >
+                                <form @submit.prevent="submit">
                                     <BreezeLabel for="name" value="name" />
                                     <input
                                         type="hidden"

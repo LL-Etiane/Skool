@@ -13,8 +13,7 @@ class AdminSubjectController extends Controller
 {
     public function __construct()
     {
-        // $this->middleware('admin');
-        view()->share(['isAdmin' => True]);
+        
     }
     /**
      * Display a listing of the resource.
